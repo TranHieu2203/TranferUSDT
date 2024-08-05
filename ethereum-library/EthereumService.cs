@@ -79,7 +79,7 @@ namespace EthereumLibrary
                 var currentGasPriceInGwei = UnitConversion.Convert.FromWei(currentGasPriceInWei, UnitConversion.EthUnit.Gwei);
 
 
-                // Tăng giá gas để đảm bảo giao dịch được khai thác
+                // Tăng giá gas để đảm bảo giao dịch được 
                 decimal gasPriceIncreasePercentage = 0.5m; // Tăng giá gas thêm 50%
                 decimal increasedGasPriceInGwei = currentGasPriceInGwei * (1 + gasPriceIncreasePercentage);
                 var increasedGasPriceInWei = UnitConversion.Convert.ToWei(increasedGasPriceInGwei, UnitConversion.EthUnit.Gwei);
