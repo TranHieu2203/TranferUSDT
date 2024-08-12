@@ -42,5 +42,12 @@ namespace Api.Controllers
             LoggingLibrary.Logger.LogInfo("------------");
             return Ok(account);
         }
+        // Get Transaction
+        [HttpGet("get-transaction")]
+        public async Task<IActionResult> GetTransaction(string transactionHash)
+        {
+            var receipt = await _ethereumService.GetTransactionReceipt(transactionHash);
+            return Ok(receipt);
+        }
     }
 }

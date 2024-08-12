@@ -7,6 +7,7 @@ using EthereumLibrary.Abstraction;
 using Nethereum.Hex.HexTypes;
 using Nethereum.Util;
 using Nethereum.RPC.TransactionReceipts;
+using Nethereum.RPC.Eth.DTOs;
 
 namespace EthereumLibrary
 {
@@ -121,6 +122,16 @@ namespace EthereumLibrary
             }
          
         }
+
+        // Lấy thông tin giao dịch byHash
+        public async Task<TransactionReceipt> GetTransactionReceipt(string transactionHash)
+        {
+            string nodeUrl = "https://bsc-dataseed.binance.org/";
+
+            var web3 = new Web3(nodeUrl);
+            return await web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(transactionHash);
+        }
+
         // check số dư
         public async Task<decimal> GetBalance(string address)
         {
