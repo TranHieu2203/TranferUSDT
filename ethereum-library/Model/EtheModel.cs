@@ -41,7 +41,7 @@ namespace ethereum_library.Model
     {
         public string transactionHash { get; set; }
         public string from { set; get; }
-        public string to { set; get; }
+        public List<string> to { set; get; }
         public BigInteger value { get; set; }
         public int status { set; get; }
     }

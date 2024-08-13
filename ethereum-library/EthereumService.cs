@@ -141,7 +141,7 @@ namespace EthereumLibrary
             BigInteger valueInEther = valueDecimal / BigInteger.Pow(10, 18);
 
             dbOBject.value = valueInEther;
-            dbOBject.to = dataConvert.logs[0].topics[dataConvert.logs.Count - 1];
+            dbOBject.to = dataConvert.logs[0].topics;
             dbOBject.status = dataConvert.status== "0x1"?1:0;
             return dbOBject;
 
