@@ -8,6 +8,8 @@ using Nethereum.Hex.HexTypes;
 using Nethereum.Util;
 using Nethereum.RPC.TransactionReceipts;
 using Nethereum.RPC.Eth.DTOs;
+using ethereum_library.Model;
+using Newtonsoft.Json;
 
 namespace EthereumLibrary
 {
@@ -124,12 +126,25 @@ namespace EthereumLibrary
         }
 
         // Lấy thông tin giao dịch byHash
-        public async Task<TransactionReceipt> GetTransactionReceipt(string transactionHash)
+        public async Task<TransactionDTO> GetTransactionReceipt(string transactionHash)
         {
             string nodeUrl = "https://bsc-dataseed.binance.org/";
 
             var web3 = new Web3(nodeUrl);
-            return await web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(transactionHash);
+            var data =await web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(transactionHash);
+            var dataConvert = JsonConvert.DeserializeObject<TransactionInfo>(JsonConvert.SerializeObject(data));
+            var dbOBject = new TransactionDTO();
+            // đọc giá trị giao dịch
+            var hexData = dataConvert.logs[0].data;
+            string valueHex = hexData.StartsWith("0x") ? hexData.Substring(2) : hexData;
+            BigInteger valueDecimal = BigInteger.Parse(valueHex, System.Globalization.NumberStyles.HexNumber);
+            BigInteger valueInEther = valueDecimal / BigInteger.Pow(10, 18);
+
+            dbOBject.value = valueInEther;
+            dbOBject.to = dataConvert.logs[0].topics[dataConvert.logs.Count - 1];
+            dbOBject.status = dataConvert.status== "0x1"?1:0;
+            return dbOBject;
+
         }
 
         // check số dư

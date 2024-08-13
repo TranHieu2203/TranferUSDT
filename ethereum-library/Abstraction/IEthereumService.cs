@@ -1,4 +1,5 @@
-﻿using Nethereum.RPC.Eth.DTOs;
+﻿using ethereum_library.Model;
+using Nethereum.RPC.Eth.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace EthereumLibrary.Abstraction
     {
         Task<string> TransferUSDT(string toAddress, decimal amountToSend, string privateKey);
         Task<decimal> GetBalance(string address, string privateKey);
-        Task<TransactionReceipt> GetTransactionReceipt(string transactionHash);
+        Task<TransactionDTO> GetTransactionReceipt(string transactionHash);
             }
 }
